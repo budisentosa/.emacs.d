@@ -156,3 +156,12 @@
 (setq which-key-idle-secondary-delay 0.5)
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
+
+(add-hook 'python-mode-hook 'hs-minor-mode)
+(global-evil-leader-mode)
+(evil-leader/set-leader "SPC")
+(evil-leader/set-key
+  "e" 'find-file
+  "b" 'switch-to-buffer
+  "k" 'kill-buffer
+  "gs" 'magit-status)

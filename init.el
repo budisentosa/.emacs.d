@@ -26,5 +26,7 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+(require 'evil-leader)
+
 (provide 'init)
 ;;; init.el ends here

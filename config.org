@@ -217,3 +217,14 @@ Split right and split below.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'before-save-hook 'whitespace-cleanup)
 #+END_SRC
+* custome leader key default \
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'python-mode-hook 'hs-minor-mode)
+  (global-evil-leader-mode)
+  (evil-leader/set-leader "SPC")
+  (evil-leader/set-key
+    "e" 'find-file
+    "b" 'switch-to-buffer
+    "k" 'kill-buffer
+    "gs" 'magit-status)
+#+END_SRC
