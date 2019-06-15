@@ -27,6 +27,14 @@
 (load custom-file)
 
 (require 'evil-leader)
+(require 'projectile)
+(require 'treemacs)
+(require 'treemacs-evil)
+(require 'evil-visualstar)
+(require 'evil-nerd-commenter)
+(require 'indent-guide)
+(require 'evil-magit)
+
 
 (provide 'init)
 ;;; init.el ends here

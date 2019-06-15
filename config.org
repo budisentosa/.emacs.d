@@ -224,7 +224,96 @@ Split right and split below.
   (evil-leader/set-leader "SPC")
   (evil-leader/set-key
     "e" 'find-file
-    "b" 'switch-to-buffer
+    "bb" 'switch-to-buffer
+    "bn" 'next-buffer
+    "bp" 'previous-buffer
+    "bk" 'kill-buffer
     "k" 'kill-buffer
-    "gs" 'magit-status)
+    "gs" 'magit-status
+    "oc" 'org-capture
+    "oa" 'org-archive-subtree
+    "pp" 'projectile-switch-project
+    "pf" 'projectile-find-file
+    "pt" 'treemacs
+    "ci" 'evilnc-comment-or-uncomment-lines
+    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "cc" 'evilnc-copy-and-comment-lines
+    "cp" 'evilnc-comment-or-uncomment-paragraphs
+    "cr" 'comment-or-uncomment-region
+    "cv" 'evilnc-toggle-invert-comment-line-by-line
+    "."  'evilnc-copy-and-comment-operator
+    "\\" 'evilnc-comment-operator ; if you prefer backslash key
+)
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (setq projectile-indexing-method 'alien)
+  ;;; esc quits
+  (defun minibuffer-keyboard-quit ()
+  "Abort recursive edit.
+  In Delete Selection mode, if the mark is active, just deactivate it;
+  then it takes a second \\[keyboard-quit] to abort the minibuffer."
+  (interactive)
+  (if (and delete-selection-mode transient-mark-mode mark-active)
+      (setq deactivate-mark  t)
+      (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+      (abort-recursive-edit)))
+  (define-key evil-insert-state-map "jk" 'evil-normal-state)
+  (define-key evil-normal-state-map [escape] 'keyboard-quit)
+  (define-key evil-visual-state-map [escape] 'keyboard-quit)
+  (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+  (global-evil-visualstar-mode)
+  (indent-guide-global-mode)
+  (setq indent-guide-delay 0.1)
+  (setq evil-emacs-state-modes nil)
+  (setq evil-insert-state-modes nil)
+  (setq evil-motion-state-modes nil)
+  (setq evil-normal-state-modes
+        (append evil-emacs-state-modes
+                evil-insert-state-modes
+                evil-normal-state-modes
+                evil-motion-state-modes))
+  (define-key evil-normal-state-map "j" 'evil-next-visual-line)
+  (define-key evil-normal-state-map "k" 'evil-previous-visual-line)
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+  (define-key evil-normal-state-map (kbd "C-j") 'move-text-down)
+  (define-key evil-normal-state-map (kbd "C-k") 'move-text-up)
+  (evil-global-set-key 'normal "H" 'evil-first-non-blank)
+  (evil-global-set-key 'visual "H" 'evil-first-non-blank)
+  (evil-global-set-key 'motion "H" 'evil-first-non-blank)
+  (evil-global-set-key 'normal "L" (lambda () (interactive) (evil-end-of-line)))
+  (evil-global-set-key 'visual "L" (lambda () (interactive) (evil-end-of-line)))
+  (evil-global-set-key 'motion "L" (lambda () (interactive) (evil-end-of-line)))
+  (define-key evil-motion-state-map "gl" 'evil-avy-goto-line)
+  (define-key evil-normal-state-map "gl" 'evil-avy-goto-line)
+  (define-key evil-motion-state-map "go" 'evil-avy-goto-char-2)
+  (define-key evil-normal-state-map "go" 'evil-avy-goto-char-2)
 #+END_SRC
+
+(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+delay - flycheck
+
+esc sebagai ctrl g
+https://github.com/noctuid/evil-guide
+
+https://github.com/noctuid/evil-guide#using-escape-to-exit-the-minibuffer
+
+evil-numbers
+evil-visualstar
+evil-nerd-commenter
+evil-matchit
+surround
+indent-guide
+
+using , evil on magit
+
+;load a file named key-chord.el from some directory in the load-path (e.g. "~/.emacs.d")
+(require 'key-chord)
+(key-chord-mode 1)
+(key-chord-define-global "jk" 'evil-normal-state)
